@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>My Apps</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --panel: #111a2c;
+      --line: #25324d;
+      --text: #e9eefb;
+      --muted: #8b9ab8;
+      --accent: #8fb07d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(32px, 7vw, 56px);
+      letter-spacing: -0.03em;
+    }
+
+    .intro, .status {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .status { margin: 32px 0 0; }
+
+    .apps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .app {
+      display: block;
+      min-height: 120px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 120ms ease, border-color 120ms ease;
+    }
+
+    .app:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+
+    .app:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .app-name {
+      display: block;
+      font-size: 19px;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .app-action {
+      display: block;
+      margin-top: 28px;
+      color: var(--accent);
+      font-size: 13px;
+    }
+
+    .error { color: #e0a08f; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>My Apps</h1>
+    <div class="intro" id="intro">Apps published from this repository.</div>
+    <div class="status" id="status" role="status">Loading apps…</div>
+    <div class="apps" id="apps" aria-live="polite"></div>
+  </main>
+
+  <script>
+    (function () {
+      // Leave these blank to detect the repository from a standard github.io URL.
+      // Fill them in only if this page will use a custom domain.
+      const CONFIG = { owner: '', repo: '' };
+
+      const status = document.getElementById('status');
+      const apps = document.getElementById('apps');
+      const intro = document.getElementById('intro');
+
+      function detectRepository() {
+        if (CONFIG.owner && CONFIG.repo) return CONFIG;
+
+        const githubPagesMatch = location.hostname.match(/^([^.]+)\.github\.io$/i);
+        if (!githubPagesMatch) return null;
+
+        const owner = githubPagesMatch[1];
+        const firstPathPart = location.pathname.split('/').filter(Boolean)[0];
+        return {
+          owner,
+          repo: firstPathPart || owner + '.github.io'
+        };
+      }
+
+      function appLink(folder) {
+        const link = document.createElement('a');
+        const name = document.createElement('span');
+        const action = document.createElement('span');
+
+        link.className = 'app';
+        link.href = './' + encodeURIComponent(folder) + '/';
+        name.className = 'app-name';
+        name.textContent = folder;
+        action.className = 'app-action';
+        action.textContent = 'Open app →';
+
+        link.append(name, action);
+        return link;
+      }
+
+      async function loadApps() {
+        const repository = detectRepository();
+        if (!repository) {
+          throw new Error('Repository could not be detected. Set CONFIG.owner and CONFIG.repo near the top of this file.');
+        }
+
+        intro.textContent = 'Apps in ' + repository.owner + '/' + repository.repo;
+
+        const repoUrl = 'https://api.github.com/repos/' +
+          encodeURIComponent(repository.owner) + '/' + encodeURIComponent(repository.repo);
+        const repoResponse = await fetch(repoUrl);
+        if (!repoResponse.ok) {
+          throw new Error('GitHub could not load this public repository (HTTP ' + repoResponse.status + ').');
+        }
+
+        const repoDetails = await repoResponse.json();
+        const treeUrl = repoUrl + '/git/trees/' +
+          encodeURIComponent(repoDetails.default_branch) + '?recursive=1';
+        const treeResponse = await fetch(treeUrl);
+        if (!treeResponse.ok) {
+          throw new Error('GitHub could not list the repository files (HTTP ' + treeResponse.status + ').');
+        }
+
+        const tree = await treeResponse.json();
+        const folders = [...new Set(
+          tree.tree
+            .filter(item => item.type === 'blob' && /^[^/]+\/index\.html$/i.test(item.path))
+            .map(item => item.path.split('/')[0])
+        )].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+        if (folders.length === 0) {
+          status.textContent = 'No app folders containing an index.html file were found.';
+          return;
+        }
+
+        const fragment = document.createDocumentFragment();
+        folders.forEach(folder => fragment.appendChild(appLink(folder)));
+        apps.appendChild(fragment);
+        status.textContent = folders.length + (folders.length === 1 ? ' app' : ' apps');
+
+        if (tree.truncated) {
+          status.textContent += ' · GitHub returned a partial repository listing.';
+        }
+      }
+
+      loadApps().catch(error => {
+        status.classList.add('error');
+        status.textContent = error.message;
+      });
+    })();
+  </script>
+</body>
+</html>
