@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thermal Delta — Two-Place Temperature Calendar</title>
+<style>
+  :root{
+    --bg: #090d16;
+    --panel: #111a2c;
+    --panel-2: #0d1626;
+    --line: #1e2a42;
+    --text: #e9eefb;
+    --muted: #7889a8;
+    --muted-2: #4d5c7d;
+
+    /* diverging scale: deep green -> neutral gold -> warm rose */
+    --cool-deep: #6f8f73;
+    --cool-mid: #8fb07d;
+    --neutral-bg: #d8c26d;
+    --warm-mid: #d68b73;
+    --warm-deep: #b76b79;
+    --radius: 10px;
+  }
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono{ font-family: 'IBM Plex Mono', 'SFMono-Regular', monospace; }
+
+  .wrap{ max-width: 1180px; margin: 0 auto; padding: 20px 14px 60px; }
+  header.hero{ padding: 12px 4px 20px; border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+  .eyebrow{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted-2); display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .eyebrow .dot{ width:6px;height:6px;border-radius:50%; background: linear-gradient(90deg, var(--cool-deep), var(--warm-deep)); }
+  h1{ font-size: clamp(28px, 5vw, 44px); font-weight: 700; line-height: 1.05; margin: 0 0 10px; letter-spacing: -0.01em; }
+  h1 em{ font-style: normal; }
+  h1 .colder{ color: var(--cool-deep); }
+  h1 .warmer{ color: var(--warm-deep); }
+  .sub{ color: var(--muted); font-size: 15px; max-width: 600px; line-height: 1.5; }
+
+  .picker{
+    display:grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: end;
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 22px; margin-bottom: 22px;
+  }
+  @media (max-width: 720px){ .picker{ grid-template-columns: 1fr; } .vs-badge{ justify-self:center; } }
+  .field{ position:relative; }
+  .field label{
+    display:flex; align-items:center; gap:8px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .field label .swatch{ width:10px;height:10px;border-radius:2px; }
+  .field.a label .swatch{ background: var(--cool-mid); }
+  .field.b label .swatch{ background: var(--warm-mid); }
+  .field input{
+    width: 100%; background: var(--panel-2); border: 1px solid var(--line); color: var(--text);
+    font-family: 'Space Grotesk', sans-serif; font-size: 15px; padding: 12px 14px; border-radius: 8px;
+    outline: none; transition: border-color .15s ease;
+  }
+  .field input:focus{ border-color: var(--muted); }
+  .field .picked{ margin-top: 7px; font-size: 12px; color: var(--muted); min-height: 15px; }
+
+  .suggestions{
+    position:absolute; top: calc(100% + 2px); left:0; right:0; background: #0e1830;
+    border: 1px solid var(--line); border-radius: 8px; max-height: 220px; overflow-y: auto;
+    z-index: 20; display:none; box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+  }
+  .suggestions.open{ display:block; }
+  .suggestions .opt{ padding: 10px 14px; cursor:pointer; font-size: 13.5px; border-bottom: 1px solid var(--line); }
+  .suggestions .opt:last-child{ border-bottom:none; }
+  .suggestions .opt:hover, .suggestions .opt.active{ background: #16233f; }
+  .suggestions .opt .place{ color: var(--text); }
+  .suggestions .opt .region{ color: var(--muted-2); font-size: 11.5px; }
+
+  .vs-badge{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 11px; color: var(--muted-2);
+    width: 40px; height: 40px; border: 1px solid var(--line); border-radius: 50%;
+    display:flex; align-items:center; justify-content:center; margin-bottom: 3px;
+  }
+
+  .go-row{ display:flex; align-items:center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 26px; }
+  button#compareBtn{
+    background: var(--text); color: #0a0e1a; border: none; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 600; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 13px 26px; border-radius: 8px; cursor: pointer; transition: transform .12s ease, opacity .12s ease;
+  }
+  button#compareBtn:disabled{ opacity: .35; cursor: not-allowed; }
+  button#compareBtn:not(:disabled):hover{ transform: translateY(-1px); }
+
+  .control-toggles{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .unit-toggle, .measure-toggle{ display:flex; border: 1px solid var(--line); border-radius: 8px; overflow:hidden; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 12px; }
+  .unit-toggle button, .measure-toggle button{ background: var(--panel); color: var(--muted); border: none; padding: 9px 14px; cursor: pointer; }
+  .unit-toggle button.active, .measure-toggle button.active{ background: var(--text); color: #0a0e1a; }
+
+  .status{ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 12.5px; color: var(--muted); margin: -6px 0 22px; min-height: 18px; }
+  .status.err{ color: var(--warm-mid); }
+
+  .stats{
+    display:grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line);
+    border: 1px solid var(--line); border-radius: var(--radius); overflow:hidden; margin-bottom: 22px; display:none;
+  }
+  .stats.show{ display:grid; }
+  @media (max-width: 640px){ .stats{ grid-template-columns: repeat(2, 1fr);} }
+  .stat{ background: var(--panel); padding: 16px 18px; }
+  .stat .k{ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted-2); margin-bottom: 6px; }
+  .stat .v{ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 20px; font-weight: 600; }
+  .stat .v.blue{ color: var(--cool-mid); }
+  .stat .v.red{ color: var(--warm-mid); }
+
+  .legend{ display:flex; align-items:center; gap: 12px; margin-bottom: 18px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 11.5px; color: var(--muted); display:none; }
+  .legend.show{ display:flex; }
+  .legend .bar{
+    flex:1; max-width: 380px; height: 12px; border-radius: 6px;
+    background: linear-gradient(90deg, var(--cool-deep), var(--cool-mid) 25%, var(--neutral-bg) 50%, var(--warm-mid) 75%, var(--warm-deep));
+    border: 1px solid var(--line);
+  }
+
+  /* ---------- single year-at-a-glance grid ---------- */
+  .year-wrap{
+    background:#fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 10px 8px;
+  }
+  .year-grid{
+    display: grid;
+    grid-template-columns: 22px repeat(12, minmax(0, 1fr));
+    grid-auto-rows: 13px;
+    gap: 1.5px;
+    width: 100%;
+    background:#fff;
+  }
+  .col-head{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 8.5px;
+    font-weight: 700;
+    color:#303746;
+    text-align: center;
+    display:flex; align-items:flex-end; justify-content:center;
+    padding-bottom: 3px;
+    letter-spacing: -0.02em;
+  }
+  .row-label{
+    position: sticky;
+    left: 0;
+    background:#fff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 8px;
+    font-weight: 600;
+    color:#303746;
+    display:flex; align-items:center; justify-content:flex-end;
+    padding-right: 4px;
+    z-index: 2;
+  }
+  .corner{
+    position: sticky; left:0; background:#fff; z-index: 3;
+  }
+  .day-cell{
+    border-radius: 2px;
+    cursor: default;
+  }
+  .day-cell.blank{ background: transparent; }
+  @media (max-width: 400px){
+    .year-grid{ grid-template-columns: 18px repeat(12, minmax(0, 1fr)); grid-auto-rows: 12px; }
+    .row-label{ font-size: 7px; }
+    .col-head{ font-size: 7.5px; }
+  }
+
+  #tooltip{
+    position: fixed; z-index: 100; background: #0d1830; border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 12px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 12px; line-height: 1.6;
+    pointer-events: none; display:none; box-shadow: 0 10px 26px rgba(0,0,0,0.5); max-width: 230px;
+  }
+  #tooltip .d{ color: var(--muted); font-size: 10.5px; margin-bottom:4px; text-transform:uppercase; letter-spacing:.06em;}
+  #tooltip .row span:first-child{ color: var(--muted); }
+
+  footer{ margin-top: 40px; color: var(--muted-2); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 11px; line-height: 1.7; }
+  footer a{ color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow"><span class="dot"></span>daily thermal delta</div>
+    <h1>How much <em class="colder">colder</em> or <em class="warmer">warmer</em><br>is one place than another?</h1>
+    <div class="sub">Pick two locations anywhere on Earth. Every day of the year gets a cell in one compact grid — green when the first place runs cooler, rose when it runs warmer, deeper color for a bigger gap.</div>
+  </header>
+
+  <div class="picker">
+    <div class="field a">
+      <label><span class="swatch"></span>Location A</label>
+      <input id="inputA" type="text" placeholder="e.g. Reykjavik, Iceland" autocomplete="off">
+      <div class="suggestions" id="suggA"></div>
+      <div class="picked" id="pickedA"></div>
+    </div>
+    <div class="vs-badge">VS</div>
+    <div class="field b">
+      <label><span class="swatch"></span>Location B</label>
+      <input id="inputB" type="text" placeholder="e.g. Bangkok, Thailand" autocomplete="off">
+      <div class="suggestions" id="suggB"></div>
+      <div class="picked" id="pickedB"></div>
+    </div>
+  </div>
+
+  <div class="go-row">
+    <button id="compareBtn" disabled>Compare</button>
+    <div class="control-toggles">
+      <div class="measure-toggle" aria-label="Daily temperature statistic">
+        <button id="measureMean">Avg</button>
+        <button id="measureMin">Low</button>
+        <button id="measureMax" class="active">High</button>
+      </div>
+      <div class="unit-toggle" aria-label="Temperature unit">
+        <button id="unitC">°C</button>
+        <button id="unitF" class="active">°F</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <div class="stats" id="stats">
+    <div class="stat"><div class="k" id="statCoolerLabel">Days Location A is cooler</div><div class="v blue" id="statCoolerDays">–</div></div>
+    <div class="stat"><div class="k" id="statWarmerLabel">Days Location B is cooler</div><div class="v red" id="statWarmerDays">–</div></div>
+    <div class="stat"><div class="k" id="statMaxBlueLabel">Biggest gap (Location A cooler)</div><div class="v blue" id="statMaxBlue">–</div></div>
+    <div class="stat"><div class="k" id="statMaxRedLabel">Biggest gap (Location B cooler)</div><div class="v red" id="statMaxRed">–</div></div>
+  </div>
+
+  <div class="legend" id="legend">
+    <span id="legendMinLabel" class="mono">A much cooler</span>
+    <div class="bar"></div>
+    <span id="legendMaxLabel" class="mono">B much cooler</span>
+  </div>
+
+  <div class="year-wrap" id="yearWrap" style="display:none;">
+    <div class="year-grid" id="yearGrid"></div>
+  </div>
+
+  <footer>
+    Choose daily average, low, or high temperatures for the most recent complete calendar year. Hover or tap a cell for exact readings.
+    Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo.com</a>, licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.
+  </footer>
+</div>
+
+<div id="tooltip"></div>
+
+<script>
+(function(){
+  const state = { a: null, b: null, unit: 'F', measure: 'max', dataA: null, dataB: null, year: null };
+
+  const $ = (id) => document.getElementById(id);
+  const inputA = $('inputA'), inputB = $('inputB');
+  const suggA = $('suggA'), suggB = $('suggB');
+  const pickedA = $('pickedA'), pickedB = $('pickedB');
+  const compareBtn = $('compareBtn');
+  const statusEl = $('status');
+  const yearWrap = $('yearWrap');
+  const yearGrid = $('yearGrid');
+  const tooltip = $('tooltip');
+  const statsEl = $('stats');
+  const legendEl = $('legend');
+
+  $('unitC').addEventListener('click', () => setUnit('C'));
+  $('unitF').addEventListener('click', () => setUnit('F'));
+  $('measureMean').addEventListener('click', () => setMeasure('mean'));
+  $('measureMin').addEventListener('click', () => setMeasure('min'));
+  $('measureMax').addEventListener('click', () => setMeasure('max'));
+  function setUnit(u){
+    state.unit = u;
+    $('unitC').classList.toggle('active', u === 'C');
+    $('unitF').classList.toggle('active', u === 'F');
+    if(state.dataA && state.dataB) render();
+  }
+  function toDisplayTemp(c){ return state.unit === 'C' ? c : (c * 9/5 + 32); }
+  function toDisplayDelta(c){ return state.unit === 'C' ? c : c * 9/5; }
+  function unitLabel(){ return state.unit === 'C' ? '°C' : '°F'; }
+  function measureLabel(){
+    return { mean: 'average', min: 'low', max: 'high' }[state.measure];
+  }
+  function setMeasure(measure){
+    state.measure = measure;
+    $('measureMean').classList.toggle('active', measure === 'mean');
+    $('measureMin').classList.toggle('active', measure === 'min');
+    $('measureMax').classList.toggle('active', measure === 'max');
+    if(state.dataA && state.dataB) render();
+  }
+
+  function debounce(fn, ms){
+    let t;
+    return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+  }
+
+  function wireLocationField(input, suggBox, pickedBox, key){
+    let results = [];
+    let activeIdx = -1;
+
+    const doSearch = debounce(async (q) => {
+      if(!q || q.trim().length < 2){ suggBox.classList.remove('open'); suggBox.innerHTML=''; return; }
+      try{
+        const url = 'https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(q.trim()) + '&count=6&language=en&format=json';
+        const res = await fetch(url);
+        const json = await res.json();
+        results = json.results || [];
+        activeIdx = -1;
+        renderSuggestions();
+      }catch(e){
+        suggBox.classList.remove('open');
+      }
+    }, 300);
+
+    function renderSuggestions(){
+      if(results.length === 0){ suggBox.classList.remove('open'); suggBox.innerHTML=''; return; }
+      suggBox.innerHTML = results.map((r, i) => {
+        const region = [r.admin1, r.country].filter(Boolean).join(', ');
+        return '<div class="opt' + (i===activeIdx ? ' active' : '') + '" data-idx="' + i + '">' +
+          '<div class="place">' + escapeHtml(r.name) + '</div>' +
+          '<div class="region">' + escapeHtml(region) + '</div></div>';
+      }).join('');
+      suggBox.classList.add('open');
+      [...suggBox.querySelectorAll('.opt')].forEach(el => {
+        el.addEventListener('mousedown', (ev) => {
+          ev.preventDefault();
+          pick(results[+el.dataset.idx]);
+        });
+      });
+    }
+
+    function pick(r){
+      const label = r.name + (r.admin1 ? ', ' + r.admin1 : '') + (r.country ? ', ' + r.country : '');
+      state[key] = { name: label, city: r.name, lat: r.latitude, lon: r.longitude };
+      input.value = r.name;
+      pickedBox.textContent = label + '  ·  ' + r.latitude.toFixed(2) + ', ' + r.longitude.toFixed(2);
+      suggBox.classList.remove('open');
+      updateButtonState();
+    }
+
+    input.addEventListener('input', () => {
+      state[key] = null;
+      pickedBox.textContent = '';
+      updateButtonState();
+      doSearch(input.value);
+    });
+
+    input.addEventListener('keydown', (ev) => {
+      if(suggBox.classList.contains('open')){
+        if(ev.key === 'ArrowDown'){ ev.preventDefault(); activeIdx = Math.min(activeIdx+1, results.length-1); renderSuggestions(); return; }
+        if(ev.key === 'ArrowUp'){ ev.preventDefault(); activeIdx = Math.max(activeIdx-1, 0); renderSuggestions(); return; }
+        if(ev.key === 'Enter'){ ev.preventDefault(); if(activeIdx>=0) pick(results[activeIdx]); return; }
+        if(ev.key === 'Escape'){ suggBox.classList.remove('open'); return; }
+      }
+    });
+
+    input.addEventListener('blur', () => { setTimeout(() => suggBox.classList.remove('open'), 150); });
+  }
+
+  function escapeHtml(s){
+    return (s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  wireLocationField(inputA, suggA, pickedA, 'a');
+  wireLocationField(inputB, suggB, pickedB, 'b');
+
+  function updateButtonState(){
+    compareBtn.disabled = !(inputA.value.trim().length >= 2 && inputB.value.trim().length >= 2);
+  }
+
+  function lastCompleteYear(){
+    const now = new Date();
+    return now.getUTCFullYear() - 1;
+  }
+
+  async function resolveLocation(rawText){
+    const url = 'https://geocoding-api.open-meteo.com/v1/search?name=' + encodeURIComponent(rawText.trim()) + '&count=1&language=en&format=json';
+    let res;
+    try{ res = await fetch(url); }
+    catch(networkErr){ throw new Error('NETWORK: ' + (networkErr && networkErr.message ? networkErr.message : 'fetch failed')); }
+    if(!res.ok) throw new Error('HTTP ' + res.status + ' from geocoding service');
+    const json = await res.json();
+    const r = json.results && json.results[0];
+    if(!r) throw new Error('NOTFOUND: no place matched "' + rawText + '"');
+    const label = r.name + (r.admin1 ? ', ' + r.admin1 : '') + (r.country ? ', ' + r.country : '');
+    return { name: label, city: r.name, lat: r.latitude, lon: r.longitude };
+  }
+
+  async function fetchYearTemps(loc, year){
+    const start = year + '-01-01';
+    const end = year + '-12-31';
+    const url = 'https://archive-api.open-meteo.com/v1/archive?latitude=' + loc.lat +
+      '&longitude=' + loc.lon + '&start_date=' + start + '&end_date=' + end +
+      '&daily=temperature_2m_mean,temperature_2m_min,temperature_2m_max&timezone=UTC';
+    let res;
+    try{ res = await fetch(url); }
+    catch(networkErr){ throw new Error('NETWORK: ' + (networkErr && networkErr.message ? networkErr.message : 'fetch failed')); }
+    if(!res.ok) throw new Error('HTTP ' + res.status + ' from weather archive');
+    const json = await res.json();
+    if(!json.daily || !json.daily.time) throw new Error('No data returned for this location');
+    const dates = json.daily.time;
+    const maps = { mean: {}, min: {}, max: {} };
+    for(let i=0;i<dates.length;i++){
+      maps.mean[dates[i]] = json.daily.temperature_2m_mean[i];
+      maps.min[dates[i]] = json.daily.temperature_2m_min[i];
+      maps.max[dates[i]] = json.daily.temperature_2m_max[i];
+    }
+
+    return maps;
+  }
+
+  compareBtn.addEventListener('click', async () => {
+    compareBtn.disabled = true;
+    statusEl.classList.remove('err');
+    statusEl.textContent = 'Locating places and fetching daily temperatures…';
+    yearWrap.style.display = 'none';
+    yearGrid.innerHTML = '';
+    statsEl.classList.remove('show');
+    legendEl.classList.remove('show');
+
+    try{
+      if(!state.a){
+        state.a = await resolveLocation(inputA.value);
+        pickedA.textContent = state.a.name + '  ·  ' + state.a.lat.toFixed(2) + ', ' + state.a.lon.toFixed(2);
+      }
+      if(!state.b){
+        state.b = await resolveLocation(inputB.value);
+        pickedB.textContent = state.b.name + '  ·  ' + state.b.lat.toFixed(2) + ', ' + state.b.lon.toFixed(2);
+      }
+    }catch(e){
+      const msg = (e && e.message) ? e.message : 'unknown error';
+      if(msg.indexOf('NOTFOUND') === 0){
+        statusEl.textContent = 'No place matched that name — try adding a country (e.g. "Springfield, USA").';
+      }else if(msg.indexOf('NETWORK') === 0){
+        statusEl.textContent = 'Network request was blocked: ' + msg.replace('NETWORK: ', '') + '.';
+      }else{
+        statusEl.textContent = 'Lookup failed (' + msg + ').';
+      }
+      statusEl.classList.add('err');
+      compareBtn.disabled = false;
+      return;
+    }
+
+    const year = lastCompleteYear();
+    state.year = year;
+
+    try{
+      const [mapA, mapB] = await Promise.all([
+        fetchYearTemps(state.a, year),
+        fetchYearTemps(state.b, year)
+      ]);
+      state.dataA = mapA;
+      state.dataB = mapB;
+      render();
+    }catch(e){
+      const msg = (e && e.message) ? e.message : 'unknown error';
+      statusEl.textContent = 'Could not load temperature data (' + msg + ').';
+      statusEl.classList.add('err');
+    }finally{
+      compareBtn.disabled = false;
+    }
+  });
+
+  // ---------- color mapping: deep blue -> near-white -> deep red ----------
+  function hexToRgb(hex){ const n = parseInt(hex.slice(1), 16); return [(n>>16)&255, (n>>8)&255, n&255]; }
+  function lerp(a,b,t){ return a + (b-a)*t; }
+  function lerpColor(hex1, hex2, t){
+    const c1 = hexToRgb(hex1), c2 = hexToRgb(hex2);
+    const r = Math.round(lerp(c1[0], c2[0], t));
+    const g = Math.round(lerp(c1[1], c2[1], t));
+    const b = Math.round(lerp(c1[2], c2[2], t));
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+  }
+  const COOL_DEEP = '#6f8f73', COOL_MID='#8fb07d', NEUTRAL='#d8c26d', WARM_MID='#d68b73', WARM_DEEP='#b76b79';
+  function colorForDiff(diff, maxAbs){
+    if(maxAbs <= 0) return NEUTRAL;
+    const t = Math.pow(Math.min(Math.abs(diff) / maxAbs, 1),0.7); // 0 = neutral, 1 = deepest
+    if(diff < -0.05){
+      return t < 0.5 ? lerpColor(NEUTRAL, COOL_MID, t/0.5) : lerpColor(COOL_MID, COOL_DEEP, (t-0.5)/0.5);
+    }
+    if(diff > 0.05){
+      return t < 0.5 ? lerpColor(NEUTRAL, WARM_MID, t/0.5) : lerpColor(WARM_MID, WARM_DEEP, (t-0.5)/0.5);
+    }
+    return NEUTRAL;
+  }
+
+  const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  function pad(n){ return n < 10 ? '0'+n : ''+n; }
+
+  function render(){
+    const year = state.year;
+    const dataA = state.dataA[state.measure];
+    const dataB = state.dataB[state.measure];
+    const cityA = cityName(state.a);
+    const cityB = cityName(state.b);
+    statusEl.classList.remove('err');
+    statusEl.textContent = 'Showing ' + year + ' daily ' + measureLabel() + ' temperatures · ' + state.a.name + ' vs ' + state.b.name;
+    let maxAbs = 0;
+    const allDays = [];
+
+    for(let m=0; m<12; m++){
+      const daysInMonth = new Date(Date.UTC(year, m+1, 0)).getUTCDate();
+      for(let d=1; d<=daysInMonth; d++){
+        const dateStr = year + '-' + pad(m+1) + '-' + pad(d);
+        const tA = dataA[dateStr];
+        const tB = dataB[dateStr];
+        if(tA == null || tB == null) continue;
+        const diff = tA - tB;
+        maxAbs = Math.max(maxAbs, Math.abs(diff));
+        allDays.push({dateStr, month: m, day: d, diff, tA, tB});
+      }
+    }
+
+    let coolerDays = 0, warmerDays = 0, maxBlue = null, maxRed = null;
+    allDays.forEach(dd => {
+      if(dd.diff < 0){ coolerDays++; if(!maxBlue || dd.diff < maxBlue.diff) maxBlue = dd; }
+      else if(dd.diff > 0){ warmerDays++; if(!maxRed || dd.diff > maxRed.diff) maxRed = dd; }
+    });
+    $('statCoolerLabel').textContent = 'Days ' + cityA + ' is cooler';
+    $('statWarmerLabel').textContent = 'Days ' + cityB + ' is cooler';
+    $('statMaxBlueLabel').textContent = 'Biggest gap (' + cityA + ' cooler)';
+    $('statMaxRedLabel').textContent = 'Biggest gap (' + cityB + ' cooler)';
+    $('statCoolerDays').textContent = coolerDays;
+    $('statWarmerDays').textContent = warmerDays;
+    $('statMaxBlue').textContent = maxBlue ? Math.abs(toDisplayDelta(maxBlue.diff)).toFixed(1) + unitLabel() + ' — ' + fmtShort(maxBlue) : '–';
+    $('statMaxRed').textContent = maxRed ? Math.abs(toDisplayDelta(maxRed.diff)).toFixed(1) + unitLabel() + ' — ' + fmtShort(maxRed) : '–';
+    statsEl.classList.add('show');
+
+    $('legendMinLabel').textContent = '−' + toDisplayDelta(maxAbs).toFixed(1) + unitLabel() + ' (' + cityA + ' cooler)';
+    $('legendMaxLabel').textContent = '+' + toDisplayDelta(maxAbs).toFixed(1) + unitLabel() + ' (' + cityB + ' cooler)';
+    legendEl.classList.add('show');
+
+    // build the single 31x12 grid: rows = day-of-month, columns = month
+    yearGrid.innerHTML = '';
+
+    // corner cell
+    const corner = document.createElement('div');
+    corner.className = 'corner';
+    yearGrid.appendChild(corner);
+
+    // column headers Jan..Dec
+    for(let m=0; m<12; m++){
+      const h = document.createElement('div');
+      h.className = 'col-head';
+      h.textContent = MONTH_ABBR[m];
+      yearGrid.appendChild(h);
+    }
+
+    for(let d=1; d<=31; d++){
+      const label = document.createElement('div');
+      label.className = 'row-label';
+      label.textContent = d;
+      yearGrid.appendChild(label);
+
+      for(let m=0; m<12; m++){
+        const daysInMonth = new Date(Date.UTC(year, m+1, 0)).getUTCDate();
+        if(d > daysInMonth){
+          const blank = document.createElement('div');
+          blank.className = 'day-cell blank';
+          yearGrid.appendChild(blank);
+          continue;
+        }
+        const dateStr = year + '-' + pad(m+1) + '-' + pad(d);
+        const tA = dataA[dateStr];
+        const tB = dataB[dateStr];
+        const cell = document.createElement('div');
+        cell.className = 'day-cell';
+        if(tA == null || tB == null){
+          cell.style.background = 'repeating-linear-gradient(45deg, #e2e1da, #e2e1da 3px, #d3d2ca 3px, #d3d2ca 6px)';
+        }else{
+          const diff = tA - tB;
+          cell.style.background = colorForDiff(diff, maxAbs);
+          const dd = { month: m, day: d, diff, tA, tB };
+          cell.addEventListener('mouseenter', (ev) => showTooltip(ev, dd));
+          cell.addEventListener('mousemove', moveTooltip);
+          cell.addEventListener('mouseleave', hideTooltip);
+          cell.addEventListener('click', (ev) => showTooltip(ev, dd));
+        }
+        const today=new Date();
+        const isToday=(m===today.getUTCMonth()&&d===today.getUTCDate());
+        if(isToday){
+          cell.style.border="2px solid #fff";
+          cell.style.boxSizing="border-box";
+          cell.style.boxShadow="0 0 0 1px rgba(0,0,0,.25)";
+        }
+        yearGrid.appendChild(cell);
+      }
+    }
+
+    yearWrap.style.display = 'block';
+  }
+
+  function fmtShort(dd){ return MONTH_NAMES[dd.month].slice(0,3) + ' ' + dd.day; }
+  function cityName(loc){ return loc.city || loc.name.split(',')[0]; }
+
+  function showTooltip(ev, dd){
+    const dispA = toDisplayTemp(dd.tA).toFixed(1);
+    const dispB = toDisplayTemp(dd.tB).toFixed(1);
+    const dispDiff = Math.abs(toDisplayDelta(dd.diff)).toFixed(1);
+    const cityA = cityName(state.a);
+    const cityB = cityName(state.b);
+    const leader = dd.diff < -0.05 ? (cityA + ' cooler') : dd.diff > 0.05 ? (cityB + ' cooler') : 'About equal';
+    tooltip.innerHTML =
+      '<div class="d">' + fmtShort(dd) + ' ' + state.year + ' · daily ' + measureLabel() + '</div>' +
+      '<div class="row"><span>' + escapeHtml(cityA) + ': </span>' + dispA + unitLabel() + '</div>' +
+      '<div class="row"><span>' + escapeHtml(cityB) + ': </span>' + dispB + unitLabel() + '</div>' +
+      '<div class="row"><span>Gap: </span>' + dispDiff + unitLabel() + ' — ' + leader + '</div>';
+    tooltip.style.display = 'block';
+    moveTooltip(ev);
+  }
+  function moveTooltip(ev){
+    const x = (ev.clientX || 0) + 14, y = (ev.clientY || 0) + 14;
+    tooltip.style.left = Math.min(x, window.innerWidth - 240) + 'px';
+    tooltip.style.top = Math.min(y, window.innerHeight - 100) + 'px';
+  }
+  function hideTooltip(){ tooltip.style.display = 'none'; }
+
+})();
+</script>
+</body>
+</html>
