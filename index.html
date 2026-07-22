@@ -1,0 +1,120 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>My Apps</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --panel: #111a2c;
+      --line: #25324d;
+      --text: #e9eefb;
+      --muted: #8b9ab8;
+      --accent: #8fb07d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 64px 0;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(32px, 7vw, 56px);
+      letter-spacing: -0.03em;
+    }
+
+    .intro, .empty {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .apps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .app {
+      display: block;
+      min-height: 120px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 120ms ease, border-color 120ms ease;
+    }
+
+    .app:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+
+    .app:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .app-name {
+      display: block;
+      font-size: 19px;
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .app-action {
+      display: block;
+      margin-top: 28px;
+      color: var(--accent);
+      font-size: 13px;
+    }
+
+    .empty { margin-top: 32px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>My Apps</h1>
+    <div class="intro">Apps published from this repository.</div>
+    <div class="apps">
+      {% assign app_files = site.static_files | sort: "path" %}
+      {% assign app_count = 0 %}
+      {% for file in app_files %}
+        {% if file.name == "index.html" %}
+          {% assign app_path = file.path | remove_first: "/" | remove: "/index.html" %}
+          {% unless app_path == "" %}
+            {% assign app_count = app_count | plus: 1 %}
+            <a class="app" href="{{ app_path | append: '/' | relative_url }}">
+              <span class="app-name">{{ app_path }}</span>
+              <span class="app-action">Open app →</span>
+            </a>
+          {% endunless %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% if app_count == 0 %}
+      <div class="empty">No app folders containing an index.html file were found.</div>
+    {% endif %}
+  </main>
+</body>
+</html>
