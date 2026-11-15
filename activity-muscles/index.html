@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en" data-darkreader-mode="dynamic" data-darkreader-scheme="dark" data-darkreader-proxy-injected="true"><head><style class="darkreader darkreader--root-vars" media="screen"></style><style class="darkreader darkreader--variables" media="screen">:root {
+   --darkreader-neutral-background: var(--darkreader-background-ffffff, #222425);
+   --darkreader-neutral-text: var(--darkreader-text-000000, #ffffff);
+   --darkreader-selection-background: var(--darkreader-background-0060d4, #065ec8);
+   --darkreader-selection-text: var(--darkreader-text-ffffff, #ffffff);
+}</style><style class="darkreader darkreader--inline" media="screen">[data-darkreader-inline-bgcolor] {
+  background-color: var(--darkreader-inline-bgcolor) !important;
+}
+[data-darkreader-inline-bgimage] {
+  background-image: var(--darkreader-inline-bgimage) !important;
+}
+[data-darkreader-inline-border] {
+  border-color: var(--darkreader-inline-border) !important;
+}
+[data-darkreader-inline-border-bottom] {
+  border-bottom-color: var(--darkreader-inline-border-bottom) !important;
+}
+[data-darkreader-inline-border-left] {
+  border-left-color: var(--darkreader-inline-border-left) !important;
+}
+[data-darkreader-inline-border-right] {
+  border-right-color: var(--darkreader-inline-border-right) !important;
+}
+[data-darkreader-inline-border-top] {
+  border-top-color: var(--darkreader-inline-border-top) !important;
+}
+[data-darkreader-inline-boxshadow] {
+  box-shadow: var(--darkreader-inline-boxshadow) !important;
+}
+[data-darkreader-inline-color] {
+  color: var(--darkreader-inline-color) !important;
+}
+[data-darkreader-inline-fill] {
+  fill: var(--darkreader-inline-fill) !important;
+}
+[data-darkreader-inline-stroke] {
+  stroke: var(--darkreader-inline-stroke) !important;
+}
+[data-darkreader-inline-outline] {
+  outline-color: var(--darkreader-inline-outline) !important;
+}
+[data-darkreader-inline-stopcolor] {
+  stop-color: var(--darkreader-inline-stopcolor) !important;
+}
+[data-darkreader-inline-bg] {
+  background: var(--darkreader-inline-bg) !important;
+}
+[data-darkreader-inline-border-short] {
+  border: var(--darkreader-inline-border-short) !important;
+}
+[data-darkreader-inline-border-bottom-short] {
+  border-bottom: var(--darkreader-inline-border-bottom-short) !important;
+}
+[data-darkreader-inline-border-left-short] {
+  border-left: var(--darkreader-inline-border-left-short) !important;
+}
+[data-darkreader-inline-border-right-short] {
+  border-right: var(--darkreader-inline-border-right-short) !important;
+}
+[data-darkreader-inline-border-top-short] {
+  border-top: var(--darkreader-inline-border-top-short) !important;
+}
+[data-darkreader-inline-invert] {
+    filter: invert(100%) hue-rotate(180deg);
+}</style><style class="darkreader darkreader--invert" media="screen">c-wiz div > svg > circle, .jfk-bubble.gtx-bubble, .captcheck_answer_label > input + img, span#closed_text > img[src^="https://www.gstatic.com/images/branding/googlelogo"], span[data-href^="https://www.hcaptcha.com/"] > #icon, img.Wirisformula, a[data-testid="headerMediumLogo"]>svg, .d2l-navigation-link-image-container, .d2l-iframe-loading-container, div.mc-ip-hide[style*="background: rgb(255, 255, 255) !important"], [style*="color: rgb(0, 0, 1) !important;"] {
+    filter: invert(100%) hue-rotate(180deg) brightness(120%) contrast(85%) !important;
+}</style><style class="darkreader darkreader--text" media="screen"></style><style class="darkreader darkreader--user-agent" media="screen">@layer darkreader {
+html {
+    background-color: var(--darkreader-background-ffffff, #222425) !important;
+}
+html {
+    color-scheme: dark !important;
+}
+iframe {
+    color-scheme: dark !important;
+}
+html, body, input, textarea, select, button, dialog {
+    background-color: var(--darkreader-background-ffffff, #222425);
+}
+html, body, input, textarea, select, button {
+    border-color: var(--darkreader-border-4c4c4c, #898072);
+    color: var(--darkreader-text-000000, #ffffff);
+}
+a {
+    color: var(--darkreader-text-0040ff, #41acff);
+}
+table {
+    border-color: var(--darkreader-border-808080, #666e72);
+}
+mark {
+    color: var(--darkreader-text-000000, #ffffff);
+}
+::placeholder {
+    color: var(--darkreader-text-a9a9a9, #d1c9be);
+}
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    background-color: var(--darkreader-background-faffbd, #4f5406) !important;
+    color: var(--darkreader-text-000000, #ffffff) !important;
+}
+::selection {
+    background-color: var(--darkreader-background-0060d4, #065ec8) !important;
+    color: var(--darkreader-text-ffffff, #ffffff) !important;
+}
+::-moz-selection {
+    background-color: var(--darkreader-background-0060d4, #065ec8) !important;
+    color: var(--darkreader-text-ffffff, #ffffff) !important;
+}
+}</style><style class="darkreader darkreader--fallback" media="screen"></style><style class="darkreader darkreader-layers" media="screen">@layer darkreader</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Muscle Map — Activity Explorer</title>
+  <style>
+    :root {
+      --bg: #090c13;
+      --panel: #111722;
+      --panel-2: #171f2d;
+      --line: #273246;
+      --text: #f3f5f8;
+      --muted: #8f9aab;
+      --active: #f16f4f;
+      --support: #f5b65d;
+      --accent: #8fb07d;
+      --shadow: rgba(0, 0, 0, .28);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; min-height: 100%; }
+
+    body {
+      background:
+        radial-gradient(circle at 70% 20%, rgba(143, 176, 125, .10), transparent 34%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button { font: inherit; }
+
+    .app-shell {
+      width: min(1760px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 24px 0 38px;
+    }
+
+    header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1;
+      letter-spacing: -.035em;
+    }
+
+    .subtitle {
+      max-width: 580px;
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(250px, 300px) minmax(560px, 1fr) minmax(270px, 320px);
+      gap: 16px;
+      min-height: 820px;
+    }
+
+    .activity-panel,
+    .viewer-panel,
+    .muscles-panel {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(17, 23, 34, .88);
+      box-shadow: 0 22px 70px var(--shadow);
+      overflow: hidden;
+    }
+
+    .activity-panel {
+      padding: 18px;
+      max-height: 820px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+
+    .muscles-panel {
+      padding: 18px;
+      max-height: 820px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+
+    .muscles-intro {
+      margin: -3px 0 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .muscle-list {
+      display: grid;
+      gap: 7px;
+    }
+
+    .muscle-item {
+      width: 100%;
+      min-height: 48px;
+      display: grid;
+      grid-template-columns: 9px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border: 1px solid rgba(255, 255, 255, .06);
+      border-radius: 10px;
+      background: rgba(9, 12, 19, .32);
+      color: var(--muted);
+      text-align: left;
+      cursor: crosshair;
+      transition: border-color .15s ease, background .15s ease, color .15s ease, opacity .15s ease;
+    }
+
+    .muscle-item .muscle-swatch {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #552727;
+    }
+
+    .muscle-item .muscle-role {
+      color: #697487;
+      font-size: 9px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .muscle-item.primary {
+      border-color: rgba(241, 111, 79, .42);
+      background: rgba(241, 111, 79, .10);
+      color: var(--text);
+    }
+
+    .muscle-item.primary .muscle-swatch { background: var(--active); box-shadow: 0 0 12px rgba(241, 111, 79, .55); }
+    .muscle-item.primary .muscle-role { color: #f49a84; }
+
+    .muscle-item.supporting {
+      border-color: rgba(245, 182, 93, .32);
+      background: rgba(245, 182, 93, .07);
+      color: #e8e0d2;
+    }
+
+    .muscle-item.supporting .muscle-swatch { background: var(--support); box-shadow: 0 0 12px rgba(245, 182, 93, .35); }
+    .muscle-item.supporting .muscle-role { color: #d9aa65; }
+
+    .muscle-item.is-hovered,
+    .muscle-item[aria-pressed="true"],
+    .muscle-item:hover,
+    .muscle-item:focus-visible {
+      border-color: rgba(125, 211, 252, .65);
+      background: rgba(125, 211, 252, .12);
+      color: #effbff;
+      outline: none;
+    }
+
+    .muscle-item.is-hovered .muscle-swatch,
+    .muscle-item[aria-pressed="true"] .muscle-swatch,
+    .muscle-item:hover .muscle-swatch,
+    .muscle-item:focus-visible .muscle-swatch {
+      background: #7dd3fc;
+      box-shadow: 0 0 14px rgba(125, 211, 252, .7);
+    }
+
+    .muscle-item[aria-pressed="true"] {
+      border-color: #9be2ff;
+      background: #1e789c;
+      color: #fff;
+      box-shadow: 0 8px 22px rgba(13, 72, 98, .34);
+    }
+
+    .muscle-item[aria-pressed="true"] .muscle-role { color: #d9f5ff; }
+
+    .panel-label {
+      margin: 0 0 13px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .activity-list {
+      display: grid;
+      gap: 7px;
+    }
+
+    .activity {
+      width: 100%;
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 13px;
+      border: 1px solid transparent;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--muted);
+      text-align: left;
+      cursor: pointer;
+      transition: background .15s ease, border-color .15s ease, color .15s ease;
+    }
+
+    .activity:hover,
+    .activity:focus-visible {
+      background: var(--panel-2);
+      color: var(--text);
+      outline: none;
+    }
+
+    .activity[aria-pressed="true"] {
+      background: #a44733;
+      border-color: #f58a70;
+      color: #fff;
+      box-shadow: 0 8px 22px rgba(99, 34, 20, .3);
+    }
+
+    .activity-list.has-muscle-filter .activity:not(.recruits-primary):not(.recruits-supporting) {
+      opacity: .38;
+    }
+
+    .activity.recruits-primary {
+      border-color: rgba(241, 111, 79, .58);
+      background: rgba(241, 111, 79, .13);
+      color: var(--text);
+      box-shadow: inset 3px 0 0 var(--active);
+    }
+
+    .activity.recruits-supporting {
+      border-color: rgba(245, 182, 93, .48);
+      background: rgba(245, 182, 93, .10);
+      color: #f0e8dc;
+      box-shadow: inset 3px 0 0 var(--support);
+    }
+
+    .activity .arrow {
+      color: var(--active);
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity .15s ease, transform .15s ease;
+    }
+
+    .activity[aria-pressed="true"] .arrow,
+    .activity:hover .arrow,
+    .activity.recruits-primary .arrow,
+    .activity.recruits-supporting .arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .activity.recruits-primary .arrow,
+    .activity.recruits-supporting .arrow {
+      font-size: 9px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .activity.recruits-supporting .arrow { color: var(--support); }
+
+    .viewer-panel {
+      position: relative;
+      min-width: 0;
+      background:
+        radial-gradient(circle at 50% 43%, rgba(80, 102, 116, .18), transparent 36%),
+        linear-gradient(180deg, rgba(23, 31, 45, .96), rgba(11, 15, 23, .98));
+    }
+
+    #stage {
+      position: absolute;
+      inset: 0;
+      touch-action: none;
+    }
+
+    #stage canvas { display: block; width: 100%; height: 100%; }
+
+    .viewer-top {
+      position: absolute;
+      z-index: 3;
+      top: 18px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      pointer-events: none;
+    }
+
+    .selection-name {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.1;
+    }
+
+    .selection-detail {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: end;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; }
+    .dot.primary { background: var(--active); box-shadow: 0 0 12px rgba(241, 111, 79, .55); }
+    .dot.supporting { background: var(--support); box-shadow: 0 0 12px rgba(245, 182, 93, .35); }
+
+    .viewer-controls {
+      position: absolute;
+      z-index: 4;
+      right: 18px;
+      bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .view-button {
+      min-width: 44px;
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: rgba(9, 12, 19, .78);
+      color: var(--text);
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+
+    .view-button:hover,
+    .view-button:focus-visible {
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    .drag-hint {
+      position: absolute;
+      z-index: 2;
+      right: 20px;
+      top: 86px;
+      color: var(--muted);
+      font-size: 12px;
+      pointer-events: none;
+    }
+
+    .loading {
+      position: absolute;
+      z-index: 6;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(11, 15, 23, .84);
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: .04em;
+      transition: opacity .25s ease;
+      pointer-events: none;
+    }
+
+    .loading.is-hidden { opacity: 0; }
+
+    .anatomy-tooltip {
+      position: absolute;
+      z-index: 7;
+      display: none;
+      max-width: 230px;
+      padding: 8px 11px;
+      border: 1px solid rgba(125, 211, 252, .42);
+      border-radius: 8px;
+      background: rgba(5, 10, 17, .92);
+      color: #e7f7ff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+      font-size: 12px;
+      line-height: 1.35;
+      pointer-events: none;
+      backdrop-filter: blur(8px);
+    }
+
+    .anatomy-tooltip.is-visible { display: block; }
+
+    footer {
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    footer a { color: inherit; text-underline-offset: 2px; }
+
+    @media (max-width: 1180px) {
+      .workspace { grid-template-columns: minmax(230px, 280px) minmax(0, 1fr); }
+      .muscles-panel { grid-column: 1 / -1; max-height: none; }
+      .muscle-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 780px) {
+      .app-shell { width: min(100% - 20px, 720px); padding-top: 18px; }
+      header { display: block; }
+      .workspace { grid-template-columns: 1fr; min-height: 0; }
+      .activity-panel { padding: 12px; }
+      .activity-list {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        scrollbar-width: thin;
+      }
+      .activity-panel { max-height: none; overflow-y: hidden; }
+      .muscles-panel { grid-column: auto; }
+      .muscle-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .activity { width: auto; min-width: max-content; }
+      .activity .arrow { display: none; }
+      .viewer-panel { min-height: 650px; }
+      .viewer-top { display: block; }
+      .legend { justify-content: start; margin-top: 10px; }
+      .drag-hint { top: 122px; }
+    }
+
+    @media (max-width: 430px) {
+      .viewer-panel { min-height: 590px; }
+      .selection-detail { max-width: 260px; }
+      .drag-hint { display: none; }
+      .viewer-controls { right: 12px; bottom: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
+  </style><style class="darkreader darkreader--sync" media="screen"></style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+<meta name="darkreader" content="ebd1ffd015c044b5a750f029b8a0436c"><style class="darkreader darkreader--override" media="screen">c-wiz div {
+    --action-items-action-item-background-color: var(--darkreader-neutral-background) !important;
+}
+.jfk-bubble.gtx-bubble {
+    background-color: white !important;
+}
+.vimvixen-hint {
+    background-color: var(--darkreader-background-ffd76e, #7d5c06) !important;
+    border-color: var(--darkreader-background-c59d00, #ba9606) !important;
+    color: var(--darkreader-text-302505, #fbf8f2) !important;
+}
+#vimvixen-console-frame {
+    color-scheme: light !important;
+}
+::placeholder {
+    opacity: 0.5 !important;
+}
+#edge-translate-panel-body,
+.MuiTypography-body1,
+.nfe-quote-text {
+    color: var(--darkreader-neutral-text) !important;
+}
+gr-main-header {
+    background-color: var(--darkreader-background-add8e6, #255a6b) !important;
+}
+.tou-z65h9k,
+.tou-mignzq,
+.tou-1b6i2ox,
+.tou-lnqlqk {
+    background-color: var(--darkreader-neutral-background) !important;
+}
+.tou-75mvi {
+    background-color: var(--darkreader-background-cfecf5, #174857) !important;
+}
+.tou-ta9e87,
+.tou-1w3fhi0,
+.tou-1b8t2us,
+.tou-py7lfi,
+.tou-1lpmd9d,
+.tou-1frrtv8,
+.tou-17ezmgn {
+    background-color: var(--darkreader-background-f5f5f5, #292b2c) !important;
+}
+.tou-uknfeu {
+    background-color: var(--darkreader-background-faedda, #533911) !important;
+}
+.tou-6i3zyv {
+    background-color: var(--darkreader-background-85c3d8, #2f7086) !important;
+}
+div.mermaid-viewer-control-panel .btn {
+    background-color: var(--darkreader-neutral-background);
+    fill: var(--darkreader-neutral-text);
+}
+svg g rect.er {
+    fill: var(--darkreader-neutral-background) !important;
+}
+svg g rect.er.entityBox {
+    fill: var(--darkreader-neutral-background) !important;
+}
+svg g rect.er.attributeBoxOdd {
+    fill: var(--darkreader-neutral-background) !important;
+}
+svg g rect.er.attributeBoxEven {
+    fill: var(--darkreader-selection-background);
+    fill-opacity: 0.8 !important;
+}
+svg rect.er.relationshipLabelBox {
+    fill: var(--darkreader-neutral-background) !important;
+}
+svg g g.nodes rect,
+svg g g.nodes polygon {
+    fill: var(--darkreader-neutral-background) !important;
+}
+svg g rect.task {
+    fill: var(--darkreader-selection-background) !important;
+}
+svg line.messageLine0,
+svg line.messageLine1 {
+    stroke: var(--darkreader-neutral-text) !important;
+}
+div.mermaid .actor {
+    fill: var(--darkreader-neutral-background) !important;
+}
+mitid-authenticators-code-app > .code-app-container {
+    background-color: white !important;
+    padding-top: 1rem;
+}
+iframe#unpaywall[src$="unpaywall.html"] {
+    color-scheme: light !important;
+}
+select {
+    --darkreader-bg--form-control-background-color: rgba(22, 22, 22, 0) !important;
+}
+body#tumblr {
+    --darkreader-bg--secondary-accent: 31, 32, 34 !important;
+    --darkreader-bg--white: 23, 23, 23 !important;
+    --darkreader-text--black: 228, 224, 218 !important;
+}
+:host {
+    --d2l-border-color: var(--darkreader-bg--d2l-color-gypsum) !important;
+    --d2l-button-icon-background-color-hover: var(--darkreader-bg--d2l-color-gypsum) !important;
+    --d2l-color-ferrite: var(--darkreader-neutral-text) !important;
+    --d2l-color-sylvite: var(--darkreader-bg--d2l-color-sylvite) !important;
+    --d2l-dropdown-background-color: var(--darkreader-neutral-background) !important;
+    --d2l-dropdown-border-color: var(--darkreader-border--d2l-color-mica) !important;
+    --d2l-input-backgroud-color: var(--darkreader-neutral-background) !important;
+    --d2l-menu-border-color: var(--darkreader-bg--d2l-color-gypsum) !important;
+    --d2l-tooltip-background-color: var(--darkreader-neutral-background) !important;
+    --d2l-tooltip-border-color: var(--darkreader-bg--d2l-color-gypsum) !important;
+}
+:host([_floating]) .d2l-floating-buttons-container {
+    background-color: var(--darkreader-neutral-background) !important;
+    border-top-color: var(--darkreader-border--d2l-color-mica) !important;
+    opacity: 0.88 !important;
+}
+d2l-card {
+    background: var(--darkreader-neutral-background) !important;
+    border-color: var(--darkreader-border--d2l-color-gypsum) !important;
+}
+d2l-dropdown-content > div,
+d2l-menu-item {
+    background-color: var(--darkreader-neutral-background) !important;
+    border-radius: 10px !important;
+}
+d2l-empty-state-simple {
+    border-color: var(--darkreader-bg--d2l-color-gypsum) !important;
+}
+.d2l-button-filter > ul > li > a.vui-button {
+    border-color: var(--darkreader-border--d2l-color-mica) !important;
+}
+.d2l-label-text:has(.d2l-button-subtle-content):hover,
+.d2l-label-text:has(.d2l-button-subtle-content):focus,
+.d2l-label-text:has(.d2l-button-subtle-content):active {
+    background-color: var(--darkreader-bg--d2l-color-gypsum) !important;
+}
+.d2l-navigation-centerer {
+    color: inherit !important;
+}
+.d2l-tabs-layout {
+    border-color: var(--darkreader-border--d2l-color-gypsum) !important;
+}
+.d2l-input,
+.d2l-calendar-date,
+.d2l-htmleditor-container {
+    background-color: var(--darkreader-neutral-background) !important;
+}
+.d2l-collapsible-panel {
+    border: 1px solid var(--darkreader-border--d2l-color-mica) !important;
+    border-radius: 0.4rem !important;
+}
+.d2l-collapsible-panel-divider {
+    border-bottom: 1px solid var(--darkreader-border--d2l-color-mica) !important;
+}
+.d2l-w2d-flex {
+    border-bottom: 2px solid var(--darkreader-border--d2l-color-mica) !important;
+}
+.d2l-collapsible-panel scrolled,
+.d2l-collapsible-panel-header,
+.d2l-w2d-collection-fixed {
+    background-color: var(--darkreader-neutral-background) !important;
+}
+.d2l-loading-spinner-bg {
+    fill: var(--darkreader-bg--d2l-color-gypsum) !important;
+}
+.d2l-loading-spinner-bg-stroke {
+    stroke: var(--darkreader-border--d2l-color-mica) !important;
+}
+.d2l-loading-spinner-wrapper svg path,
+.d2l-loading-spinner-wrapper svg circle {
+    fill: var(--darkreader-neutral-background) !important;
+}
+.d2l-twopanelselector-side.d2l-twopanelselector-side-sep {
+    background: var(--darkreader-bg--d2l-color-mica) !important;
+}
+.d2l-le-TreeAccordionItem-anchor::before {
+    background: var(--darkreader-bg--d2l-color-corundum) !important;
+}
+table[class|="moz-header"] {
+    background: none;
+}
+*[style*="color: rgba(0,0,0,"]:not([style*="color: rgba(0,0,0,0)"]),
+*[style*="color: rgba(0, 0, 0,"]:not([style*="color: rgba(0, 0, 0, 0)"]),
+*[style*="color:#000"]:not(.cell-input > span),
+*[style*="color:black"]:not(.cell-input > span),
+*[style*="color:#282828"]:not(.cell-input > span),
+*[style*="color:#444"]:not(.cell-input > span),
+*[style*="color: #222222"]:not(.cell-input > span) {
+    color: var(--darkreader-neutral-text) !important;
+}
+*[style*="background:#fff"],
+*[style*="background-color:#fff"],
+*[style*="background: #fff"],
+*[style*="background: rgb(255, 255, 255)"] {
+    background: var(--darkreader-neutral-background) !important;
+}
+*[bgcolor="#F5F5F5"],
+*[style*="background-color: #F5F5F5"] {
+    background: var(--darkreader-background-f5f5f5, #292b2c) !important;
+}
+*[style*="background: #e6e6e6"] {
+    background: var(--darkreader-background-e6e6e6, #323537) !important;
+}
+body[style*="background: rgb(255, 255, 255) !important"] *:not(a),
+.body[style*="background-color: rgb(254, 254, 254) !important"] *:not(a) {
+    background-color: var(--darkreader-neutral-background) !important;
+}
+div[style*="www.gstatic.com/android/"] {
+    background: none !important;
+}
+*[style*="background:#f9f9f9"] {
+    background: var(--darkreader-background-f9f9f9, #25292a) !important;
+}
+body.mediawiki.skin-vector #mw-page-base {
+    background-image: none !important;
+}
+.overflow-hidden .spinning-bg,
+.overflow-hidden .solid-bg {
+    background: transparent !important;
+}
+*[style*="color: rgb(0,0,0) !imoprtant"][style*="--darkreader-inline-color"],
+*[style*="color: rgb(0, 0, 0) !important"][style*="--darkreader-inline-color"] {
+    -webkit-text-fill-color: var(--darkreader-inline-color) !important;
+}
+[class*="v-col--cols"] {
+    --v-col-is-grow:  !important;
+}
+.border-b {
+    border-bottom-style: var(--tw-border-style) !important;
+}
+td[background="https://services.google.com/fh/files/emails/bg_grey.png"] {
+    background-image: none !important;
+}</style></head>
+<body>
+  <div class="app-shell">
+    <header>
+      <div>
+        <div class="eyebrow">Interactive movement atlas</div>
+        <h1>Activity Muscle Map</h1>
+        <p class="subtitle">Choose an activity to see the primary and supporting muscle groups it recruits. Drag the body to inspect the front, sides, and back.</p>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="activity-panel" aria-label="Activities">
+        <p class="panel-label">Choose an activity</p>
+        <div class="activity-list" id="activityList"></div>
+      </aside>
+
+      <section class="viewer-panel" aria-label="Interactive 3D muscle model">
+        <div id="stage"></div>
+        
+        <div class="anatomy-tooltip" id="anatomyTooltip" role="status"></div>
+
+        <div class="viewer-top">
+          <div aria-live="polite">
+            <h2 class="selection-name" id="selectionName">Walking</h2>
+            <div class="selection-detail" id="selectionDetail">Lower-body endurance and postural stability</div>
+          </div>
+          <div class="legend" aria-label="Muscle highlight legend">
+            <span><i class="dot primary"></i>Primary</span>
+            <span><i class="dot supporting"></i>Supporting</span>
+          </div>
+        </div>
+
+        <div class="drag-hint">Drag to rotate · Scroll or pinch to zoom</div>
+
+        <div class="viewer-controls" aria-label="Body rotation controls">
+          <button class="view-button" id="rotateLeft" type="button" aria-label="Rotate body left">←</button>
+          <button class="view-button" id="frontView" type="button" aria-label="Return to front view">Front</button>
+          <button class="view-button" id="rotateRight" type="button" aria-label="Rotate body right">→</button>
+        </div>
+      </section>
+
+      <aside class="muscles-panel" aria-label="Muscles recruited">
+        <p class="panel-label">Muscles recruited</p>
+        <p class="muscles-intro">Activity muscles are highlighted below. Hover to locate a muscle and its activities; click to keep that filter active. Hover the anatomy to find its name here.</p>
+        <div class="muscle-list" id="muscleList" aria-live="polite"></div>
+      </aside>
+    </main>
+
+    <footer>
+      Educational visualization, not a medical device or diagnostic tool. Muscle recruitment varies with technique, intensity, mobility, and individual anatomy.
+      Anatomical model adapted from <a href="https://github.com/MervinR07/open-anatomy-3d" target="_blank" rel="noopener noreferrer">Open Anatomy 3D</a>,
+      BodyParts3D © DBCLS, HuBMAP, and MakeHuman; model licensed under
+      <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.
+    </footer>
+  </div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
+
+    const activities = [
+      {
+        id: 'walking', name: 'Walking', detail: 'Lower-body endurance and postural stability',
+        primary: ['glutes', 'quadriceps', 'hamstrings', 'calves'],
+        supporting: ['core', 'hipFlexors', 'back', 'shins']
+      },
+      {
+        id: 'running', name: 'Running', detail: 'Propulsion, impact control, and trunk stability',
+        primary: ['glutes', 'quadriceps', 'hamstrings', 'calves', 'hipFlexors'],
+        supporting: ['core', 'back', 'shoulders', 'shins']
+      },
+      {
+        id: 'cycling', name: 'Cycling', detail: 'Repeated hip and knee extension',
+        primary: ['quadriceps', 'glutes', 'hamstrings'],
+        supporting: ['calves', 'hipFlexors', 'core']
+      },
+      {
+        id: 'swimming', name: 'Swimming', detail: 'Whole-body pulling, rotation, and kicking',
+        primary: ['back', 'shoulders', 'chest', 'upperArms', 'core'],
+        supporting: ['rotatorCuff', 'glutes', 'quadriceps', 'hamstrings']
+      },
+      {
+        id: 'rowing', name: 'Rowing', detail: 'Leg drive followed by back and arm pull',
+        primary: ['quadriceps', 'glutes', 'back', 'trapezius', 'upperArms'],
+        supporting: ['hamstrings', 'core', 'forearms']
+      },
+      {
+        id: 'hiking', name: 'Hiking', detail: 'Climbing strength and uneven-ground stability',
+        primary: ['glutes', 'quadriceps', 'hamstrings', 'calves'],
+        supporting: ['core', 'hipFlexors', 'back', 'adductors']
+      },
+      {
+        id: 'squats', name: 'Squats', detail: 'Hip and knee extension under load',
+        primary: ['quadriceps', 'glutes'],
+        supporting: ['hamstrings', 'core', 'back', 'calves', 'adductors']
+      },
+      {
+        id: 'pushups', name: 'Push-ups', detail: 'Horizontal pushing and trunk bracing',
+        primary: ['chest', 'upperArms', 'shoulders'],
+        supporting: ['core', 'back', 'glutes']
+      },
+      {
+        id: 'pullups', name: 'Pull-ups', detail: 'Vertical pulling and grip strength',
+        primary: ['back', 'trapezius', 'upperArms'],
+        supporting: ['forearms', 'shoulders', 'rotatorCuff', 'core']
+      },
+      {
+        id: 'yoga', name: 'Yoga', detail: 'Isometric control across broad ranges of motion',
+        primary: ['core', 'glutes', 'shoulders'],
+        supporting: ['quadriceps', 'hamstrings', 'back', 'calves', 'hipFlexors']
+      },
+      {
+        id: 'elliptical', name: 'Elliptical', detail: 'Low-impact hip and knee drive with arm assistance',
+        primary: ['quadriceps', 'glutes', 'hamstrings'],
+        supporting: ['calves', 'core', 'upperArms', 'shoulders']
+      },
+      {
+        id: 'stairs', name: 'Stair Climbing', detail: 'Repeated single-leg elevation and hip extension',
+        primary: ['glutes', 'quadriceps', 'calves'],
+        supporting: ['hamstrings', 'hipFlexors', 'core', 'adductors']
+      },
+      {
+        id: 'jump-rope', name: 'Jump Rope', detail: 'Elastic lower-leg power and rhythmic stabilization',
+        primary: ['calves', 'quadriceps'],
+        supporting: ['hamstrings', 'glutes', 'core', 'forearms', 'shoulders']
+      },
+      {
+        id: 'kayaking', name: 'Kayaking', detail: 'Rotational pulling with sustained shoulder control',
+        primary: ['back', 'shoulders', 'core', 'upperArms'],
+        supporting: ['forearms', 'rotatorCuff', 'chest', 'hipFlexors']
+      },
+      {
+        id: 'tennis', name: 'Tennis', detail: 'Multidirectional acceleration and rotational striking',
+        primary: ['shoulders', 'core', 'glutes', 'quadriceps'],
+        supporting: ['forearms', 'upperArms', 'rotatorCuff', 'calves', 'adductors']
+      },
+      {
+        id: 'golf', name: 'Golf Swing', detail: 'Sequenced hip, trunk, and shoulder rotation',
+        primary: ['core', 'glutes', 'back', 'shoulders'],
+        supporting: ['forearms', 'rotatorCuff', 'adductors', 'hamstrings']
+      },
+      {
+        id: 'deadlift', name: 'Deadlift', detail: 'Loaded hip extension with spinal stabilization',
+        primary: ['glutes', 'hamstrings', 'back'],
+        supporting: ['quadriceps', 'core', 'forearms', 'trapezius', 'adductors']
+      },
+      {
+        id: 'lunges', name: 'Lunges', detail: 'Unilateral hip and knee control through a split stance',
+        primary: ['quadriceps', 'glutes', 'hamstrings'],
+        supporting: ['adductors', 'calves', 'core', 'hipFlexors']
+      },
+      {
+        id: 'plank', name: 'Plank', detail: 'Anti-extension trunk bracing and shoulder stability',
+        primary: ['core'],
+        supporting: ['shoulders', 'chest', 'glutes', 'quadriceps', 'back']
+      },
+      {
+        id: 'bench-press', name: 'Bench Press', detail: 'Loaded horizontal pressing',
+        primary: ['chest', 'upperArms', 'shoulders'],
+        supporting: ['rotatorCuff', 'back', 'forearms']
+      },
+      {
+        id: 'overhead-press', name: 'Overhead Press', detail: 'Vertical pressing with trunk stabilization',
+        primary: ['shoulders', 'upperArms'],
+        supporting: ['trapezius', 'rotatorCuff', 'core', 'chest']
+      },
+      {
+        id: 'weight-training', name: 'Lifting Weights', detail: 'General resistance training across major movement patterns',
+        primary: ['quadriceps', 'glutes', 'back', 'chest', 'shoulders', 'upperArms'],
+        supporting: ['hamstrings', 'core', 'forearms', 'calves']
+      },
+      {
+        id: 'bicep-curls', name: 'Bicep Curls', detail: 'Elbow flexion with forearm and shoulder stabilization',
+        primary: ['upperArms'],
+        supporting: ['forearms', 'shoulders', 'core']
+      },
+      {
+        id: 'tricep-dips', name: 'Tricep Dips', detail: 'Bodyweight elbow extension and shoulder control',
+        primary: ['upperArms', 'chest'],
+        supporting: ['shoulders', 'core', 'back']
+      },
+      {
+        id: 'lateral-raises', name: 'Lateral Raises', detail: 'Shoulder abduction under controlled resistance',
+        primary: ['shoulders'],
+        supporting: ['trapezius', 'rotatorCuff', 'upperArms', 'core']
+      },
+      {
+        id: 'kettlebell-swings', name: 'Kettlebell Swings', detail: 'Explosive hip extension with dynamic trunk control',
+        primary: ['glutes', 'hamstrings', 'back'],
+        supporting: ['core', 'shoulders', 'forearms', 'quadriceps']
+      },
+      {
+        id: 'farmers-carry', name: "Farmer's Carry", detail: 'Loaded walking with grip and postural endurance',
+        primary: ['forearms', 'trapezius', 'core'],
+        supporting: ['shoulders', 'back', 'glutes', 'calves']
+      },
+      {
+        id: 'leg-press', name: 'Leg Press', detail: 'Loaded hip and knee extension on a fixed path',
+        primary: ['quadriceps', 'glutes'],
+        supporting: ['hamstrings', 'calves', 'adductors']
+      },
+      {
+        id: 'calf-raises', name: 'Calf Raises', detail: 'Loaded ankle plantar flexion and lower-leg control',
+        primary: ['calves'],
+        supporting: ['shins', 'hamstrings', 'core']
+      },
+      {
+        id: 'dancing', name: 'Dancing', detail: 'Dynamic balance, footwork, and whole-body coordination',
+        primary: ['glutes', 'quadriceps', 'calves', 'core'],
+        supporting: ['hamstrings', 'adductors', 'hipFlexors', 'shins', 'shoulders']
+      }
+    ];
+
+    const muscleAliases = {
+      calves: 'lowerLeg',
+      shins: 'lowerLeg',
+      glutes: 'hips',
+      hipFlexors: 'hips',
+      adductors: 'hips',
+      trapezius: 'back',
+      rotatorCuff: 'shoulders'
+    };
+
+    activities.forEach(activity => {
+      activity.primary = [...new Set(activity.primary.map(name => muscleAliases[name] || name))];
+      activity.supporting = [...new Set(activity.supporting.map(name => muscleAliases[name] || name))]
+        .filter(name => !activity.primary.includes(name));
+    });
+
+    const muscleLabels = {
+      lowerLeg: 'Calves & lower leg', quadriceps: 'Quadriceps', hamstrings: 'Hamstrings', hips: 'Glutes & hip muscles',
+      core: 'Abdominal wall', chest: 'Pectoral muscles', shoulders: 'Deltoids & shoulder girdle',
+      upperArms: 'Upper-arm muscles', forearms: 'Forearm muscles', back: 'Back muscles',
+    };
+
+    const activityList = document.getElementById('activityList');
+    const selectionName = document.getElementById('selectionName');
+    const selectionDetail = document.getElementById('selectionDetail');
+    const muscleList = document.getElementById('muscleList');
+    let selectedActivity = activities[0];
+    let previewActivity = null;
+
+    activities.forEach((activity, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'activity';
+      button.dataset.activity = activity.id;
+      button.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
+      button.innerHTML = `<span>${activity.name}</span><span class="arrow" aria-hidden="true">→</span>`;
+      button.addEventListener('pointerenter', () => {
+        previewActivity = activity;
+        renderActivity(activity);
+      });
+      button.addEventListener('pointerleave', () => {
+        previewActivity = null;
+        renderCommittedView();
+      });
+      button.addEventListener('focus', () => {
+        previewActivity = activity;
+        renderActivity(activity);
+      });
+      button.addEventListener('blur', () => {
+        previewActivity = null;
+        renderCommittedView();
+      });
+      button.addEventListener('click', () => {
+        selectedActivity = activity;
+        selectedMuscleGroup = null;
+        previewActivity = null;
+        document.querySelectorAll('.activity').forEach(item => {
+          item.setAttribute('aria-pressed', item.dataset.activity === activity.id ? 'true' : 'false');
+        });
+        document.querySelectorAll('.muscle-item').forEach(item => item.setAttribute('aria-pressed', 'false'));
+        renderActivity(activity);
+      });
+      activityList.appendChild(button);
+    });
+
+    const stage = document.getElementById('stage');
+    const loading = document.getElementById('loading');
+    const anatomyTooltip = document.getElementById('anatomyTooltip');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(31, 1, 0.01, 100);
+    camera.position.set(0, .92, 3.65);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.7));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.12;
+    stage.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enablePan = false;
+    controls.enableDamping = true;
+    controls.dampingFactor = .055;
+    controls.minDistance = 2.35;
+    controls.maxDistance = 6.5;
+    controls.target.set(0, .92, 0);
+    controls.minPolarAngle = Math.PI * .30;
+    controls.maxPolarAngle = Math.PI * .70;
+    controls.saveState();
+
+    scene.add(new THREE.HemisphereLight(0xf3f7ff, 0x263229, 2.25));
+    const keyLight = new THREE.DirectionalLight(0xffe5da, 3.8);
+    keyLight.position.set(3.5, 4.8, 4.5);
+    scene.add(keyLight);
+    const fillLight = new THREE.DirectionalLight(0xa9c8ff, 2.5);
+    fillLight.position.set(-4, 2.4, 2.5);
+    scene.add(fillLight);
+    const rimLight = new THREE.DirectionalLight(0xd5ffe7, 2.6);
+    rimLight.position.set(2, 3, -4);
+    scene.add(rimLight);
+
+    const body = new THREE.Group();
+    scene.add(body);
+
+    const muscleKeys = {
+      lowerLeg: ['calf_l', 'calf_r', 'shin_muscles_l', 'shin_muscles_r'],
+      quadriceps: ['quadriceps_l', 'quadriceps_r'],
+      hamstrings: ['hamstrings_l', 'hamstrings_r'],
+      hips: ['gluteal_l', 'gluteal_r', 'iliopsoas_l', 'iliopsoas_r', 'adductors_l', 'adductors_r'],
+      core: ['abdominal_muscles', 'intercostals_l', 'intercostals_r'],
+      chest: ['chest_muscles_l', 'chest_muscles_r'],
+      shoulders: ['deltoid_l', 'deltoid_r', 'shoulder_muscles_l', 'shoulder_muscles_r', 'rotator_cuff_l', 'rotator_cuff_r'],
+      upperArms: ['upper_arm_muscles_l', 'upper_arm_muscles_r'],
+      forearms: ['forearm_muscles_l', 'forearm_muscles_r'],
+      back: ['back_muscles_l', 'back_muscles_r', 'trapezius_l', 'trapezius_r']
+    };
+
+    const muscleMeshes = new Map();
+    const meshGroupByKey = new Map();
+    Object.entries(muscleKeys).forEach(([group, keys]) => {
+      keys.forEach(key => meshGroupByKey.set(key, group));
+    });
+    let currentMuscleStates = {};
+    let hoveredMuscle = null;
+    let hoveredGroup = null;
+    let selectedMuscleGroup = null;
+    let activeMuscleView = null;
+    let exactMuscleView = null;
+    let modelReady = false;
+
+    Object.keys(muscleKeys).forEach(name => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'muscle-item';
+      button.dataset.muscle = name;
+      button.setAttribute('aria-pressed', 'false');
+      button.innerHTML = `
+        <span class="muscle-swatch" aria-hidden="true"></span>
+        <span>${muscleLabels[name]}</span>
+        <span class="muscle-role">—</span>
+      `;
+      button.addEventListener('pointerenter', () => previewMuscleGroup(name));
+      button.addEventListener('pointerleave', clearMuscleGroupPreview);
+      button.addEventListener('focus', () => previewMuscleGroup(name));
+      button.addEventListener('blur', clearMuscleGroupPreview);
+      button.addEventListener('click', () => toggleMuscleGroup(name));
+      muscleList.appendChild(button);
+    });
+
+    const anatomicalNames = {
+      abdominal_muscles: 'Abdominal wall muscles',
+      back_muscles: 'Back muscles',
+      calf: 'Calf muscles',
+      chest_muscles: 'Pectoral muscle',
+      deltoid: 'Deltoid muscle',
+      diaphragm: 'Diaphragm',
+      foot_muscles: 'Intrinsic foot muscles',
+      forearm_muscles: 'Forearm muscles',
+      gluteal: 'Gluteal muscles',
+      hamstrings: 'Hamstrings',
+      hand_muscles: 'Intrinsic hand muscles',
+      iliopsoas: 'Iliopsoas',
+      adductors: 'Hip adductors',
+      intercostals: 'Intercostal muscles',
+      neck_muscles: 'Neck muscles',
+      pelvic_floor: 'Pelvic floor',
+      quadriceps: 'Quadriceps',
+      rotator_cuff: 'Rotator cuff',
+      shin_muscles: 'Anterior lower-leg muscles',
+      shoulder_muscles: 'Shoulder girdle muscles',
+      trapezius: 'Trapezius',
+      upper_arm_muscles: 'Upper-arm muscles'
+    };
+
+    function structureLabel(key) {
+      const sideMatch = key.match(/_(l|r)$/);
+      const side = sideMatch ? (sideMatch[1] === 'l' ? 'left' : 'right') : '';
+      const base = key.replace(/_(l|r)$/, '');
+      const label = anatomicalNames[base] || base.replaceAll('_', ' ').replace(/\b\w/g, char => char.toUpperCase());
+      return side ? `${label} · ${side}` : label;
+    }
+
+    function setMaterialAppearance(object, system) {
+      if (!object.isMesh) return;
+      object.material = object.material.clone();
+      object.material.depthWrite = system !== 'skin';
+      object.material.roughness = .58;
+
+      if (system === 'skin') {
+        object.material.color.setHex(0xcbd9dc);
+        object.material.transparent = true;
+        object.material.opacity = .075;
+        object.material.depthWrite = false;
+        object.material.side = THREE.DoubleSide;
+      } else if (system === 'skeleton') {
+        object.material.color.setHex(0xd9d4c3);
+        object.material.transparent = true;
+        object.material.opacity = .15;
+        object.material.depthWrite = false;
+      } else if (system === 'muscles') {
+        object.material.color.setHex(0x7a2927);
+        object.material.emissive = new THREE.Color(0x180303);
+        object.material.emissiveIntensity = .18;
+        object.material.transparent = true;
+        object.material.opacity = .22;
+        object.material.depthWrite = false;
+        muscleMeshes.set(object.name, object);
+      }
+    }
+
+    async function loadAnatomy() {
+      try {
+        const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
+        const gltf = await loader.loadAsync('https://cdn.jsdelivr.net/npm/open-anatomy-3d@0.1.0/models/anatomy-male.glb');
+        const model = gltf.scene;
+
+        ['organs', 'vessels', 'nerves'].forEach(name => {
+          const system = model.getObjectByName(name);
+          if (system) system.visible = false;
+        });
+
+        ['skin', 'skeleton', 'muscles'].forEach(systemName => {
+          const system = model.getObjectByName(systemName);
+          if (system) system.traverse(object => setMaterialAppearance(object, systemName));
+        });
+
+        body.add(model);
+        modelReady = true;
+        renderCommittedView();
+        loading.classList.add('is-hidden');
+        setTimeout(() => loading.remove(), 300);
+      } catch (error) {
+        console.error(error);
+        loading.textContent = 'The anatomical model could not be loaded. Check your connection and reload.';
+      }
+    }
+
+    const floor = new THREE.Mesh(
+      new THREE.CircleGeometry(.82, 64),
+      new THREE.MeshBasicMaterial({ color: 0x314039, transparent: true, opacity: .34, depthWrite: false })
+    );
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.y = -.015;
+    scene.add(floor);
+
+    function applyMeshState(part, state) {
+      if (state === 'hover') {
+        part.material.color.setHex(0x7dd3fc);
+        part.material.emissive.setHex(0x14516a);
+        part.material.emissiveIntensity = 1.25;
+        part.material.opacity = 1;
+        part.material.depthWrite = true;
+      } else if (state === 'primary') {
+        part.material.color.setHex(0xf16f4f);
+        part.material.emissive.setHex(0x66180c);
+        part.material.emissiveIntensity = .9;
+        part.material.opacity = 1;
+        part.material.depthWrite = true;
+      } else if (state === 'supporting') {
+        part.material.color.setHex(0xf5b65d);
+        part.material.emissive.setHex(0x4b2807);
+        part.material.emissiveIntensity = .55;
+        part.material.opacity = .88;
+        part.material.depthWrite = true;
+      } else {
+        part.material.color.setHex(0x7a2927);
+        part.material.emissive.setHex(0x180303);
+        part.material.emissiveIntensity = .18;
+        part.material.opacity = .22;
+        part.material.depthWrite = false;
+      }
+    }
+
+    function setMuscleState(name, state) {
+      (muscleKeys[name] || []).forEach(key => {
+        const part = muscleMeshes.get(key);
+        if (part) applyMeshState(part, state);
+      });
+    }
+
+    function stateForMesh(key) {
+      return currentMuscleStates[meshGroupByKey.get(key)] || 'inactive';
+    }
+
+    function refreshMuscleAppearance() {
+      Object.entries(muscleKeys).forEach(([name, keys]) => {
+        keys.forEach(key => {
+          const part = muscleMeshes.get(key);
+          if (!part) return;
+          const isExact = exactMuscleView === key;
+          const isActiveGroup = !exactMuscleView && activeMuscleView === name;
+          applyMeshState(part, isExact || isActiveGroup ? 'hover' : stateForMesh(key));
+        });
+      });
+
+      const anatomyGroup = hoveredMuscle ? meshGroupByKey.get(hoveredMuscle.name) : null;
+      document.querySelectorAll('.muscle-item').forEach(item => {
+        item.classList.toggle('is-hovered', item.dataset.muscle === (anatomyGroup || activeMuscleView));
+      });
+    }
+
+    function updateActivityRecruitmentHighlights() {
+      const muscle = activeMuscleView;
+      activityList.classList.toggle('has-muscle-filter', Boolean(muscle));
+
+      document.querySelectorAll('.activity').forEach(item => {
+        const activity = activities.find(entry => entry.id === item.dataset.activity);
+        const role = muscle && activity.primary.includes(muscle)
+          ? 'primary'
+          : muscle && activity.supporting.includes(muscle) ? 'supporting' : '';
+        item.classList.toggle('recruits-primary', role === 'primary');
+        item.classList.toggle('recruits-supporting', role === 'supporting');
+        item.querySelector('.arrow').textContent = role || '→';
+      });
+    }
+
+    function updateMusclePanel() {
+      document.querySelectorAll('.muscle-item').forEach(item => {
+        const state = currentMuscleStates[item.dataset.muscle] || 'inactive';
+        item.classList.remove('primary', 'supporting');
+        if (state !== 'inactive') item.classList.add(state);
+        const role = item.querySelector('.muscle-role');
+        role.textContent = state === 'inactive' ? '—' : state;
+        item.setAttribute('aria-label', `${muscleLabels[item.dataset.muscle]}: ${state === 'inactive' ? 'not emphasized' : state}`);
+      });
+      refreshMuscleAppearance();
+    }
+
+    function previewMuscleGroup(name) {
+      hoveredGroup = name;
+      if (hoveredMuscle) hoveredMuscle = null;
+      anatomyTooltip.classList.remove('is-visible');
+      renderMuscleView(name, true);
+    }
+
+    function clearMuscleGroupPreview() {
+      hoveredGroup = null;
+      renderCommittedView();
+    }
+
+    function toggleMuscleGroup(name) {
+      selectedMuscleGroup = selectedMuscleGroup === name ? null : name;
+      document.querySelectorAll('.activity').forEach(item => {
+        item.setAttribute('aria-pressed', !selectedMuscleGroup && item.dataset.activity === selectedActivity.id ? 'true' : 'false');
+      });
+      document.querySelectorAll('.muscle-item').forEach(item => {
+        item.setAttribute('aria-pressed', item.dataset.muscle === selectedMuscleGroup ? 'true' : 'false');
+      });
+      if (selectedMuscleGroup) renderMuscleView(selectedMuscleGroup);
+      else if (hoveredGroup) renderMuscleView(hoveredGroup, true);
+      else renderCommittedView();
+    }
+
+    function renderActivity(activity) {
+      activeMuscleView = null;
+      exactMuscleView = null;
+      selectionName.textContent = activity.name;
+      selectionDetail.textContent = activity.detail + (previewActivity ? ' · Preview' : '');
+
+      currentMuscleStates = {};
+      Object.keys(muscleKeys).forEach(name => {
+        const state = activity.primary.includes(name)
+          ? 'primary'
+          : activity.supporting.includes(name) ? 'supporting' : 'inactive';
+        currentMuscleStates[name] = state;
+        setMuscleState(name, state);
+      });
+      updateMusclePanel();
+      updateActivityRecruitmentHighlights();
+    }
+
+    function renderMuscleView(name, isPreview = false, exactKey = null) {
+      activeMuscleView = name;
+      exactMuscleView = exactKey;
+      const primaryCount = activities.filter(activity => activity.primary.includes(name)).length;
+      const supportingCount = activities.filter(activity => activity.supporting.includes(name)).length;
+      selectionName.textContent = exactKey ? structureLabel(exactKey) : muscleLabels[name];
+      selectionDetail.textContent = `${primaryCount} primary ${primaryCount === 1 ? 'activity' : 'activities'} · ${supportingCount} supporting${isPreview ? ' · Preview' : ''}`;
+
+      currentMuscleStates = {};
+      Object.keys(muscleKeys).forEach(group => {
+        currentMuscleStates[group] = 'inactive';
+        setMuscleState(group, 'inactive');
+      });
+      updateMusclePanel();
+      updateActivityRecruitmentHighlights();
+    }
+
+    function renderCommittedView() {
+      if (selectedMuscleGroup) renderMuscleView(selectedMuscleGroup);
+      else renderActivity(selectedActivity);
+    }
+
+    function resize() {
+      const width = stage.clientWidth;
+      const height = stage.clientHeight;
+      renderer.setSize(width, height, false);
+      camera.aspect = width / Math.max(height, 1);
+      camera.updateProjectionMatrix();
+    }
+
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(stage);
+
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+
+    function clearMuscleHover() {
+      const hadHover = Boolean(hoveredMuscle);
+      hoveredMuscle = null;
+      anatomyTooltip.classList.remove('is-visible');
+      renderer.domElement.style.cursor = '';
+      if (hadHover) renderCommittedView();
+    }
+
+    function inspectMuscle(event) {
+      if (!modelReady || event.pointerType === 'touch' || event.buttons) {
+        clearMuscleHover();
+        return;
+      }
+
+      const rect = renderer.domElement.getBoundingClientRect();
+      pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+
+      const hits = raycaster.intersectObjects([...muscleMeshes.values()], false);
+      const nextMuscle = hits.length ? hits[0].object : null;
+
+      if (nextMuscle !== hoveredMuscle) {
+        const previousMuscle = hoveredMuscle;
+        hoveredMuscle = nextMuscle;
+        if (hoveredMuscle) {
+          const group = meshGroupByKey.get(hoveredMuscle.name);
+          renderMuscleView(group, true, hoveredMuscle.name);
+        } else if (previousMuscle) {
+          renderCommittedView();
+        }
+      }
+
+      if (!hoveredMuscle) {
+        anatomyTooltip.classList.remove('is-visible');
+        renderer.domElement.style.cursor = '';
+        return;
+      }
+
+      anatomyTooltip.textContent = structureLabel(hoveredMuscle.name);
+      anatomyTooltip.classList.add('is-visible');
+      renderer.domElement.style.cursor = 'crosshair';
+
+      const tooltipWidth = 230;
+      const x = Math.min(event.clientX - rect.left + 14, rect.width - tooltipWidth - 8);
+      const y = Math.max(8, Math.min(event.clientY - rect.top + 14, rect.height - 52));
+      anatomyTooltip.style.left = Math.max(8, x) + 'px';
+      anatomyTooltip.style.top = y + 'px';
+    }
+
+    renderer.domElement.addEventListener('pointermove', inspectMuscle);
+    renderer.domElement.addEventListener('pointerleave', clearMuscleHover);
+
+    let targetRotation = body.rotation.y;
+    function rotateBy(amount) {
+      targetRotation += amount;
+    }
+
+    document.getElementById('rotateLeft').addEventListener('click', () => rotateBy(-Math.PI / 4));
+    document.getElementById('rotateRight').addEventListener('click', () => rotateBy(Math.PI / 4));
+    document.getElementById('frontView').addEventListener('click', () => {
+      targetRotation = 0;
+      controls.reset();
+      camera.position.set(0, .92, 3.65);
+      controls.target.set(0, .92, 0);
+    });
+
+    renderer.domElement.addEventListener('pointerdown', () => {
+      clearMuscleHover();
+      targetRotation = body.rotation.y;
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+      body.rotation.y += (targetRotation - body.rotation.y) * .08;
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    renderActivity(selectedActivity);
+    resize();
+    animate();
+    loadAnatomy();
+  </script>
+
+
+</body></html>
